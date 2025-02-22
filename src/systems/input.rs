@@ -2,7 +2,7 @@ use crate::components::*;
 use crate::constants::*;
 use crate::events::*;
 use hecs::{Entity, World};
-use macroquad::input::is_key_pressed;
+use macroquad::input;
 use macroquad::input::KeyCode;
 use std::collections::HashMap;
 
@@ -25,13 +25,13 @@ pub fn run_input(world: &World) {
     for (_, (position, _player)) in world.query::<(&mut Position, &Player)>().iter() {
         // Now iterate through current position to the end of the map
         // on the correct axis and check what needs to move.
-        let key = if is_key_pressed(KeyCode::Up) {
+        let key = if input::is_key_pressed(KeyCode::Up) {
             KeyCode::Up
-        } else if is_key_pressed(KeyCode::Down) {
+        } else if input::is_key_pressed(KeyCode::Down) {
             KeyCode::Down
-        } else if is_key_pressed(KeyCode::Left) {
+        } else if input::is_key_pressed(KeyCode::Left) {
             KeyCode::Left
-        } else if is_key_pressed(KeyCode::Right) {
+        } else if input::is_key_pressed(KeyCode::Right) {
             KeyCode::Right
         } else {
             continue;

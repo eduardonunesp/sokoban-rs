@@ -1,5 +1,4 @@
 use crate::events::Event;
-use macroquad::audio::play_sound;
 use macroquad::{audio, prelude::*};
 use std::collections::HashMap;
 use std::fmt;

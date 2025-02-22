@@ -1,6 +1,5 @@
 use crate::components::*;
 use crate::constants::*;
-
 use hecs::{Entity, World};
 use macroquad::prelude::*;
 use std::time::Duration;
