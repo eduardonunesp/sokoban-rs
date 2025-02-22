@@ -1,0 +1,10 @@
+[package]
+name = "sokoban-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+macroquad = { version = "0.4", features = ["audio"] }
+glam = { version = "0.24", features = ["mint"] }
+hecs = "0.10.5"
+itertools = "0.13.0"
