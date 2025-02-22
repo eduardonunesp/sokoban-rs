@@ -8,8 +8,8 @@ use std::collections::HashMap;
 
 pub fn initialize_level(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
-    sounds_atlas: HashMap<String, Sound>,
+    texture_atlas: &HashMap<String, Texture2D>,
+    sounds_atlas: &HashMap<String, Sound>,
 ) {
     const MAP: &str = "
     N N W W W W W W
@@ -23,11 +23,11 @@ pub fn initialize_level(
     W W W W W W W W
     ";
 
-    load_map(world, MAP.to_string(), texture_atlas);
-    load_sounds(world, sounds_atlas);
+    load_map(world, MAP.to_string(), &texture_atlas);
+    load_sounds(world, &sounds_atlas);
 }
 
-pub fn load_map(world: &mut World, map_string: String, texture_atlas: HashMap<String, Texture2D>) {
+pub fn load_map(world: &mut World, map_string: String, texture_atlas: &HashMap<String, Texture2D>) {
     // read all lines
     let rows: Vec<&str> = map_string.trim().split('\n').map(|x| x.trim()).collect();
 
@@ -45,31 +45,31 @@ pub fn load_map(world: &mut World, map_string: String, texture_atlas: HashMap<St
             // Figure out what object we should create
             match *column {
                 "." => {
-                    create_floor(world, texture_atlas.clone(), position);
+                    create_floor(world, &texture_atlas, position);
                 }
                 "W" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_wall(world, texture_atlas.clone(), position);
+                    create_floor(world, &texture_atlas, position);
+                    create_wall(world, &texture_atlas, position);
                 }
                 "P" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_player(world, texture_atlas.clone(), position);
+                    create_floor(world, &texture_atlas, position);
+                    create_player(world, &texture_atlas, position);
                 }
                 "BB" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_box(world, texture_atlas.clone(), position, BoxColour::Blue);
+                    create_floor(world, &texture_atlas, position);
+                    create_box(world, &texture_atlas, position, BoxColour::Blue);
                 }
                 "RB" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_box(world, texture_atlas.clone(), position, BoxColour::Red);
+                    create_floor(world, &texture_atlas, position);
+                    create_box(world, &texture_atlas, position, BoxColour::Red);
                 }
                 "BS" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_box_spot(world, texture_atlas.clone(), position, BoxColour::Blue);
+                    create_floor(world, &texture_atlas, position);
+                    create_box_spot(world, &texture_atlas, position, BoxColour::Blue);
                 }
                 "RS" => {
-                    create_floor(world, texture_atlas.clone(), position);
-                    create_box_spot(world, texture_atlas.clone(), position, BoxColour::Red);
+                    create_floor(world, &texture_atlas, position);
+                    create_box_spot(world, &texture_atlas, position, BoxColour::Red);
                 }
                 "N" => (),
                 c => panic!("unrecognized map item {}", c),
@@ -78,7 +78,7 @@ pub fn load_map(world: &mut World, map_string: String, texture_atlas: HashMap<St
     }
 }
 
-pub fn load_sounds(world: &mut World, sounds_atlas: HashMap<String, Sound>) {
+pub fn load_sounds(world: &mut World, sounds_atlas: &HashMap<String, Sound>) {
     let mut query = world.query::<&mut crate::components::AudioStore>();
     let audio_store = query.iter().next().unwrap().1;
 

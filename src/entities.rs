@@ -5,7 +5,7 @@ use std::collections::HashMap;
 
 pub fn create_wall(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
+    texture_atlas: &HashMap<String, Texture2D>,
     position: Position,
 ) -> Entity {
     let texture = texture_atlas
@@ -21,7 +21,7 @@ pub fn create_wall(
 
 pub fn create_floor(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
+    texture_atlas: &HashMap<String, Texture2D>,
     position: Position,
 ) -> Entity {
     let texture = texture_atlas
@@ -35,7 +35,7 @@ pub fn create_floor(
 
 pub fn create_box(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
+    texture_atlas: &HashMap<String, Texture2D>,
     position: Position,
     colour: BoxColour,
 ) -> Entity {
@@ -58,7 +58,7 @@ pub fn create_box(
 
 pub fn create_box_spot(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
+    texture_atlas: &HashMap<String, Texture2D>,
     position: Position,
     colour: BoxColour,
 ) -> Entity {
@@ -74,7 +74,7 @@ pub fn create_box_spot(
 
 pub fn create_player(
     world: &mut World,
-    texture_atlas: HashMap<String, Texture2D>,
+    texture_atlas: &HashMap<String, Texture2D>,
     position: Position,
 ) -> Entity {
     world.spawn((
