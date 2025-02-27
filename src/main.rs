@@ -4,6 +4,8 @@ use macroquad::audio::{self, Sound};
 use macroquad::conf::UpdateTrigger;
 use macroquad::prelude::*;
 use std::collections::HashMap;
+
+#[cfg(not(target_arch = "wasm32"))]
 use std::env;
 
 mod components;
@@ -31,14 +33,24 @@ fn window_conf() -> macroquad::conf::Conf {
     }
 }
 
+#[cfg(not(target_arch = "wasm32"))]
+fn set_current_path() {
+    let current_dir = env::current_dir().expect("failed to get current directory.");
+    let resources_dir = std::path::Path::new(&current_dir).join("resources");
+    let resorces_path = resources_dir
+        .to_str()
+        .expect("failed to get assets folder path.");
+    set_pc_assets_folder(resorces_path);
+}
+
+#[cfg(target_arch = "wasm32")]
+fn set_current_path() {
+    set_pc_assets_folder("resources");
+}
+
 #[macroquad::main(window_conf)]
 async fn main() {
-    set_pc_assets_folder(
-        std::path::Path::new(&env::current_dir().unwrap())
-            .join("resources")
-            .to_str()
-            .unwrap(),
-    );
+    set_current_path();
 
     let texture_atlas = make_texture_atlas().await;
     let sounds_atlas = make_sound_atlas().await;
